@@ -46,7 +46,7 @@ const converter = {
   },
   greyscale: (greyscaleValue) => {
     if (greyscaleValue === undefined || greyscaleValue === null) {
-      throw new Error("Invalid greyscale.");
+      return null;
   }
     let str = "rgb(";
     const colors = [];
