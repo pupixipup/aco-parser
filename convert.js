@@ -45,7 +45,7 @@ const converter = {
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
   },
   greyscale: (greyscaleValue) => {
-    if (greyscaleValue) {
+    if (greyscaleValue === undefined || greyscaleValue === null) {
       throw new Error("Invalid greyscale.");
   }
     let str = "rgb(";
