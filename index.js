@@ -59,10 +59,10 @@ function colorInColorSpace(colorSpace, w, x, y, z) {
       return {type: "cmyk", values: [c, m, y1, k]}
   } else if (colorSpace === 7) {
       // Lab color space - what is it?
+      console.log(w,x,y,z)
       return null;
   } else if (colorSpace === 8) {
-      // const greyscale = w / 39.0625;
-      return null;
+      return {type: "greyscale", values: w};
   } else if (colorSpace === 9) {
       const c = w / 100;
       const m = x / 100;
@@ -99,12 +99,9 @@ let location = {
 let buffer = data.subarray(location.cursor, location.to);
 
 let version = buffer.readUInt16BE(0);
-console.log("v: ", version)
 // Read the number of colors
 buffer = data.subarray(location.cursor, location.to);
 let numColors = buffer.readUInt16BE(0);
-console.log("num:", numColors)
-
 
 // Loop through each color entry
 for (let i = 0; i < numColors; i++) {
@@ -120,7 +117,6 @@ for (let i = 0; i < numColors; i++) {
     }
     // Call the colorInColorSpace function to convert and print the color
     const pallete = colorInColorSpace(colorType, ...components);
-    console.log(pallete)
     colors.push(pallete)
 }
 return colors

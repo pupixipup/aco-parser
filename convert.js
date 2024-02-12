@@ -1,4 +1,11 @@
 const converter = {
+  rgb: (rgb) => {
+    if (rgb.length !== 3) {
+      throw new Error("Invalid RGBA array. It should contain 3 values [r, g, b ].");
+  }
+  const [r, g, b] = rgb;
+  return `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`
+  },
   cmyk: (cmyk) => {
     // Ensure the input array has exactly 4 values
     if (cmyk.length !== 4) {
@@ -17,7 +24,11 @@ const converter = {
     return `#${hex.toUpperCase()}`;
   },
   hsb: (hsb) => {
+    if (hsb.length !== 3) {
+      throw new Error("Invalid HSB array. It should contain 3 values.");
+  }
     const [h, s, b] = hsb;
+    
     var i = Math.floor(h * 6);
     var f = h * 6 - i;
     var p = b * (1 - s);
@@ -32,6 +43,20 @@ const converter = {
         case 5: r = b, g = p, b = q; break;
     }
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+  },
+  greyscale: (greyscaleValue) => {
+    if (greyscaleValue) {
+      throw new Error("Invalid greyscale.");
+  }
+    let str = "rgb(";
+    const colors = [];
+    greyscaleValue = Math.max(0, Math.min(10000, greyscaleValue));
+    const intensity = Math.round(greyscaleValue * 255 / 10000);
+    for (let i = 0; i < 3; i+= 1) {
+      // str += intensity;
+      colors.push(intensity);
+    } 
+    return str + colors.join(",") + ")"
   }
 }
 
